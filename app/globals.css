@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #06070a;
+    --foreground: #f3f4f6;
+    --surface-1: #0d0f17;
+    --surface-2: #141724;
+    --surface-3: #1a1e2e;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-highlight: rgba(255, 255, 255, 0.18);
+    --safe: #10b981;
+    --safe-glow: rgba(16, 185, 129, 0.25);
+    --monitoring: #06b6d4;
+    --monitoring-glow: rgba(6, 182, 212, 0.25);
+    --warning: #f59e0b;
+    --warning-glow: rgba(245, 158, 11, 0.25);
+    --emergency: #ff2d55;
+    --emergency-glow: rgba(255, 45, 85, 0.4);
+    --iqoo-orange: #ff5e00;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+    selection-background-color: #ff2d55;
+    selection-color: #ffffff;
+  }
+}
+
+/* Glassmorphism & High-tech surfaces */
+.glass-panel {
+  background: rgba(13, 16, 25, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-elevated {
+  background: rgba(18, 22, 35, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+.glass-panel-danger {
+  background: rgba(35, 12, 20, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 45, 85, 0.35);
+  box-shadow: 0 0 35px -5px rgba(255, 45, 85, 0.3);
+}
+
+/* Sci-fi cyber grid backdrop */
+.cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.radar-sweep {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(6, 182, 212, 0.05) 320deg,
+    rgba(6, 182, 212, 0.35) 360deg
+  );
+}
+
+/* Animations */
+@keyframes pulse-subtle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+@keyframes emergency-strobe {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(255, 45, 85, 0.2), inset 0 0 15px rgba(255, 45, 85, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(255, 45, 85, 0.6), inset 0 0 30px rgba(255, 45, 85, 0.4);
+  }
+}
+
+@keyframes scan-horizontal {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 4s ease-in-out infinite;
+}
+
+.animate-emergency-strobe {
+  animation: emergency-strobe 1.2s ease-in-out infinite;
+}
+
+.animate-scanner {
+  animation: scan-horizontal 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Custom sleek scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(6, 7, 10, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
