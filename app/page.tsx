@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Header from "@/components/shell/Header";
 import Navigation from "@/components/shell/Navigation";
-import MobileFrame from "@/components/shell/MobileFrame";
 import LandingScreen from "@/components/landing/LandingScreen";
 import LiveDashboard from "@/components/dashboard/LiveDashboard";
 import EmergencySimulationModal from "@/components/emergency-flow/EmergencySimulationModal";
@@ -24,7 +23,6 @@ export default function Home() {
   const [isSimulationModalOpen, setIsSimulationModalOpen] = useState(false);
   const [isDemoTourOpen, setIsDemoTourOpen] = useState(false);
   const [demoStepIndex, setDemoStepIndex] = useState(0);
-  const [isDeviceFrame, setIsDeviceFrame] = useState(true);
 
   // Trigger emergency simulation flow
   const handleStartEmergencySimulation = () => {
@@ -90,104 +88,102 @@ export default function Home() {
   };
 
   return (
-    <MobileFrame enabled={isDeviceFrame}>
-      <div className="min-h-full flex flex-col justify-between relative bg-[#06070a] text-slate-100 selection:bg-[#ff2d55]/30">
-        {/* Top Header */}
-        <Header
-          currentScreen={currentScreen}
-          onOpenDemoTour={() => setIsDemoTourOpen(true)}
-          isDeviceFrame={isDeviceFrame}
-          onToggleDeviceFrame={() => setIsDeviceFrame(!isDeviceFrame)}
-          onGoHome={() => setCurrentScreen("dashboard")}
-        />
+    <div className="w-full min-h-screen flex flex-col bg-[#06070a] text-slate-100 selection:bg-[#ff2d55]/30 selection:text-white">
+      {/* Top Universal Responsive Header */}
+      <Header
+        currentScreen={currentScreen}
+        onSelectScreen={(screen) => setCurrentScreen(screen)}
+        onOpenDemoTour={() => setIsDemoTourOpen(true)}
+        onTriggerEmergency={handleStartEmergencySimulation}
+        onGoHome={() => setCurrentScreen("landing")}
+      />
 
-        {/* Main View Area */}
-        <main className="flex-1 flex flex-col justify-start">
-          {currentScreen === "landing" && (
-            <LandingScreen
-              onStartSafetyMode={() => setCurrentScreen("dashboard")}
-              onSeeHowItWorks={() => setCurrentScreen("architecture")}
-              onOpenDemo={() => {
-                setIsDemoTourOpen(true);
-                handleSelectDemoStep(0);
-              }}
-            />
-          )}
-
-          {currentScreen === "dashboard" && (
-            <LiveDashboard
-              safetyStatus={safetyStatus}
-              onSimulateEmergency={handleStartEmergencySimulation}
-              onOpenDemoTour={() => {
-                setIsDemoTourOpen(true);
-                handleSelectDemoStep(1);
-              }}
-            />
-          )}
-
-          {currentScreen === "confirmation" && (
-            <ConfirmationScreen
-              onSafe={handleUserConfirmedSafe}
-              onGetHelp={handleUserGetHelp}
-              onViewAnalysis={() => setCurrentScreen("analysis")}
-            />
-          )}
-
-          {currentScreen === "analysis" && (
-            <SituationAnalysis
-              onContinueToResponse={() => setCurrentScreen("response")}
-              onBackToConfirmation={() => setCurrentScreen("confirmation")}
-            />
-          )}
-
-          {currentScreen === "response" && (
-            <EmergencyResponseScreen
-              onCancelEmergency={handleCancelEmergency}
-              onReturnToDashboard={handleUserConfirmedSafe}
-            />
-          )}
-
-          {currentScreen === "history" && <SafetyHistory />}
-
-          {currentScreen === "privacy" && <PrivacyPanel />}
-
-          {currentScreen === "architecture" && <PipelineFlow />}
-
-          {currentScreen === "developer" && <McpInspector />}
-        </main>
-
-        {/* Cinematic 4-Step Emergency Modal */}
-        <EmergencySimulationModal
-          isOpen={isSimulationModalOpen}
-          onComplete={handleSimulationComplete}
-          onCancel={() => {
-            setIsSimulationModalOpen(false);
-            sensorStream.resetToNormal();
-            setSafetyStatus("PROTECTED");
-          }}
-        />
-
-        {/* 60s Guided Demo Mode Overlay for Hackathon Judges */}
-        {isDemoTourOpen && (
-          <JudgeDemoTour
-            currentStepIndex={demoStepIndex}
-            onSelectStep={handleSelectDemoStep}
-            onClose={() => setIsDemoTourOpen(false)}
-            onReset={handleResetDemo}
+      {/* Main Responsive Viewport Area */}
+      <main className="flex-1 w-full flex flex-col justify-start">
+        {currentScreen === "landing" && (
+          <LandingScreen
+            onStartSafetyMode={() => setCurrentScreen("dashboard")}
+            onSeeHowItWorks={() => setCurrentScreen("architecture")}
+            onOpenDemo={() => {
+              setIsDemoTourOpen(true);
+              handleSelectDemoStep(0);
+            }}
           />
         )}
 
-        {/* Persistent Bottom Navigation Dock (shown on interior screens) */}
-        {currentScreen !== "landing" &&
-          currentScreen !== "confirmation" &&
-          currentScreen !== "response" && (
-            <Navigation
-              currentScreen={currentScreen}
-              onSelectScreen={(screen) => setCurrentScreen(screen)}
-              onTriggerEmergency={handleStartEmergencySimulation}
-            />
-          )}
-      </div>
-    </MobileFrame>
+        {currentScreen === "dashboard" && (
+          <LiveDashboard
+            safetyStatus={safetyStatus}
+            onSimulateEmergency={handleStartEmergencySimulation}
+            onOpenDemoTour={() => {
+              setIsDemoTourOpen(true);
+              handleSelectDemoStep(1);
+            }}
+          />
+        )}
+
+        {currentScreen === "confirmation" && (
+          <ConfirmationScreen
+            onSafe={handleUserConfirmedSafe}
+            onGetHelp={handleUserGetHelp}
+            onViewAnalysis={() => setCurrentScreen("analysis")}
+          />
+        )}
+
+        {currentScreen === "analysis" && (
+          <SituationAnalysis
+            onContinueToResponse={() => setCurrentScreen("response")}
+            onBackToConfirmation={() => setCurrentScreen("confirmation")}
+          />
+        )}
+
+        {currentScreen === "response" && (
+          <EmergencyResponseScreen
+            onCancelEmergency={handleCancelEmergency}
+            onReturnToDashboard={handleUserConfirmedSafe}
+          />
+        )}
+
+        {currentScreen === "history" && <SafetyHistory />}
+
+        {currentScreen === "privacy" && <PrivacyPanel />}
+
+        {currentScreen === "architecture" && <PipelineFlow />}
+
+        {currentScreen === "developer" && <McpInspector />}
+      </main>
+
+      {/* Cinematic 4-Step Emergency Modal */}
+      <EmergencySimulationModal
+        isOpen={isSimulationModalOpen}
+        onComplete={handleSimulationComplete}
+        onCancel={() => {
+          setIsSimulationModalOpen(false);
+          sensorStream.resetToNormal();
+          setSafetyStatus("PROTECTED");
+        }}
+      />
+
+      {/* 60s Guided Demo Mode Overlay for Hackathon Judges */}
+      {isDemoTourOpen && (
+        <JudgeDemoTour
+          currentStepIndex={demoStepIndex}
+          onSelectStep={handleSelectDemoStep}
+          onClose={() => setIsDemoTourOpen(false)}
+          onReset={handleResetDemo}
+        />
+      )}
+
+      {/* Mobile-Only Bottom Navigation Dock (shown on interior screens, hidden on desktop) */}
+      {currentScreen !== "landing" &&
+        currentScreen !== "confirmation" &&
+        currentScreen !== "response" && (
+          <Navigation
+            currentScreen={currentScreen}
+            onSelectScreen={(screen) => setCurrentScreen(screen)}
+            onTriggerEmergency={handleStartEmergencySimulation}
+          />
+        )}
+    </div>
   );
 }

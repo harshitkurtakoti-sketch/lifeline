@@ -37,7 +37,7 @@ export default function JudgeDemoTour({
   const currentStep = DEMO_STEPS[currentStepIndex] || DEMO_STEPS[0];
 
   return (
-    <div className="fixed bottom-16 inset-x-2 sm:inset-x-auto sm:right-6 sm:w-96 z-50 glass-panel-elevated p-3.5 rounded-2xl border border-amber-500/40 shadow-2xl animate-scale-up">
+    <div className="fixed bottom-20 md:bottom-6 inset-x-2 sm:inset-x-auto sm:right-6 sm:w-96 z-50 glass-panel-elevated p-3.5 rounded-2xl border border-amber-500/40 shadow-2xl animate-scale-up">
       {/* Top Banner */}
       <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
         <div className="flex items-center gap-1.5">

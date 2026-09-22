@@ -5,6 +5,10 @@ class SoundEffectsManager {
   private ctx: AudioContext | null = null;
   public isMuted = false;
 
+  public setMuted(muted: boolean) {
+    this.isMuted = muted;
+  }
+
   private getContext(): AudioContext | null {
     if (typeof window === "undefined") return null;
     if (!this.ctx) {

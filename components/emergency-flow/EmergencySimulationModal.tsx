@@ -63,7 +63,7 @@ export default function EmergencySimulationModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fade-in">
-      <div className="w-full max-w-md glass-panel-danger rounded-2xl p-6 border border-[#ff2d55]/40 shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[460px]">
+      <div className="w-full max-w-lg glass-panel-danger rounded-3xl p-6 sm:p-7 border border-[#ff2d55]/40 shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[480px]">
         {/* Ambient background alert glow */}
         <div className="absolute -top-24 -left-24 w-60 h-60 rounded-full bg-[#ff2d55]/15 blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -right-24 w-60 h-60 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
